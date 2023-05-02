@@ -487,7 +487,7 @@ function corrupt.single(a)
 end
 
 
-return {
+local frontend = {
 	init = function(config, targets)
 		local isinjected = _G.__corruptsettings ~= nil
 
@@ -506,3 +506,8 @@ return {
 		end
 	end;
 }
+
+return -- need to retun a table inside the table fghuikhjkasdgkhua
+	{
+		frontend
+	}
