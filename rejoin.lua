@@ -1,1 +1,0 @@
-game:FindService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:FindService("Players").LocalPlayer)
