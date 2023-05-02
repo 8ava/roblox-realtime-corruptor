@@ -507,7 +507,4 @@ local frontend = {
 	end;
 }
 
-return -- need to retun a table inside the table fghuikhjkasdgkhua
-	{
-		frontend
-	}
+return frontend
