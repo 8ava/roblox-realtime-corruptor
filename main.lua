@@ -66,7 +66,7 @@ local luatypes = {
 
 		for _, a in next, z do
 			iter = iter + 1
-			if iter >= _G.__corruptsettings.scriptiterations then break end
+			if iter >= _G.__corruptsettings.scriptiterations then continue end
 
 			luatype(a)
 		end
@@ -77,7 +77,11 @@ local types = {
 	ModuleScript = function(a)
 		if not _G.__corruptsettings.affectscripts then return end
 
-		coroutine.wrap(function() luatype(require(a)) end)()
+		local working = pcall(require(a))
+
+		if working then
+			pcall(function() luatype(require(a)) end)
+		end
 	end;
 
 	['Workspace'] = function(a)
@@ -475,10 +479,10 @@ local types = {
 
 luatype = function(a)
 	local t = type(a)
+
 	if luatypes[t] then
-		--print("luatype")
 		luatypes[t](a)
-	end
+	end; 
 
 	t = nil;
 end
