@@ -75,13 +75,15 @@ local luatypes = {
 
 local types = {
 	ModuleScript = function(a)
-		if not _G.__corruptsettings.affectscripts then return end
+		coroutine.wrap(function()
+			if not _G.__corruptsettings.affectscripts then return end
 
-		local working = pcall(require(a))
+			local working = pcall(require(a))
 
-		if working then
-			pcall(function() luatype(require(a)) end)
-		end
+			if working then
+				pcall(function() luatype(require(a)) end)
+			end
+		end)()
 	end;
 
 	['Workspace'] = function(a)
