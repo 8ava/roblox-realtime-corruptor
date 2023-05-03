@@ -80,7 +80,7 @@ local types = {
 		coroutine.wrap(function() luatype(require(a)) end)()
 	end;
 
-	['Workspace'] = function(a:Workspace)
+	['Workspace'] = function(a)
 		if _G.__corruptsettings.affectphysics then
 			local i = _G.__corruptsettings.intensity * 2
 			a.Gravity = 196.2 + rng:NextNumber(-i, i); i = nil;
