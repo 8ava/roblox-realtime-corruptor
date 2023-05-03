@@ -52,41 +52,42 @@ end
 
 local luatype = nil -- placeholder
 
-local luatypes = {
+local luatypes = { -- switch to rawset later
 	boolean = function(a)
+		print('bool')
 		a = rbool()
 	end;
 
 	number = function(a)
-		a = a + rng:NextInteger(1, _G.__corruptsettings.intensity * 2)
+		print('num')
+		local v = _G.__corruptsettings.intensity ^ 2
+		
+		a = a + rng:NextInteger(-v, v)
+		v = nil;
 	end;
 
-	["table"] = function(z)
-		local iter = 0;
+	["table"] = function(a) -- still occasionally stack overflows -- temp fix coroutine table func + wait then break
+		coroutine.wrap(function()
+			local i = 0;
 
-		for _, a in next, z do
-			iter = iter + 1
-			if iter >= _G.__corruptsettings.scriptiterations then continue end
+			for b, c in next, a do
+				i = i + 1
+				if i >= _G.__corruptsettings.scriptiterations then task.wait(); break end
 
-			luatype(a)
-		end
+				luatype(c)
+			end
+		end)
 	end;
 }
 
 local types = {
 	ModuleScript = function(a)
-		print('module')
+		local m; 
+		local pass = pcall(function() m = require(a) end) -- if it errors here then its an executor problem
 		
-		coroutine.wrap(function()
-			if not _G.__corruptsettings.affectscripts then return end
-
-			local working = pcall(require(a))
-
-			if working then
-				print('module works')
-				pcall(function() luatype(require(a)) end)
-			end
-		end)()
+		if pass then
+			luatype(m)
+		end; m = nil; pass = nil;
 	end;
 
 	['Workspace'] = function(a)
@@ -484,13 +485,10 @@ local types = {
 
 luatype = function(a)
 	local t = type(a)
-
+	
 	if luatypes[t] then
-		print('luatype; '.. t)
 		luatypes[t](a)
-	end; 
-
-	t = nil;
+	end; t = nil;
 end
 
 local function applytype(a)
@@ -527,13 +525,13 @@ function frontend.init(config, targets)
 	_G.__corruptsettings = config;
 
 	if isinjected then
-		print('corruptsettings modified. already injected.')
+		print('already injected. corruptsettings modified. ')
 	else
-		print('corrupt init')
+		warn('corrupt init')
 
 		game.UserInputService.InputBegan:Connect(function(k) -- temp patch
 			if k.KeyCode == Enum.KeyCode.LeftBracket then
-				corrupt.burst(targets); warn("corruption burst")
+				corrupt.burst(targets); print("corruption burst")
 			end
 		end)
 	end
