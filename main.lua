@@ -478,8 +478,6 @@ local types = {
 
 
 luatype = function(a)
-	print('applied type to value in script')
-	
 	local t = type(a)
 
 	if luatypes[t] then
