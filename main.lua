@@ -54,29 +54,39 @@ local luatype = nil -- placeholder
 
 local luatypes = { -- switch to rawset later
 	boolean = function(a)
-		print('bool')
 		a = rbool()
 	end;
 
 	number = function(a)
-		print('num')
 		local v = _G.__corruptsettings.intensity ^ 2
-		
+
 		a = a + rng:NextInteger(-v, v)
 		v = nil;
 	end;
 
 	["table"] = function(a) -- still occasionally stack overflows -- temp fix coroutine table func + wait then break
-		coroutine.wrap(function()
-			local i = 0;
-
+		coroutine.wrap(function() -- you do what you have to do, ignore the nesting
 			for b, c in next, a do
+				local i = 0;
+				local t = {}
+
 				i = i + 1
 				if i >= _G.__corruptsettings.scriptiterations then task.wait(); break end
 
-				luatype(c)
+
+				if type(c) == 'table' then
+					t[#t + 1] = c -- faster than table.insert
+				else
+					luatype(c)
+				end
+
+				if #t > 0 then
+					for _, d in next, t do
+						luatype(d)
+					end
+				end
 			end
-		end)
+		end)()
 	end;
 }
 
@@ -84,9 +94,9 @@ local types = {
 	ModuleScript = function(a)
 		local m; 
 		local pass = pcall(function() m = require(a) end) -- if it errors here then its an executor problem
-		
+
 		if pass then
-			luatype(m)
+			pcall(function() luatype(m) end) -- bandaid patch
 		end; m = nil; pass = nil;
 	end;
 
@@ -485,7 +495,7 @@ local types = {
 
 luatype = function(a)
 	local t = type(a)
-	
+
 	if luatypes[t] then
 		luatypes[t](a)
 	end; t = nil;
@@ -510,6 +520,8 @@ function corrupt.burst(sequence)
 			--[[coroutine.wrap(function()]] applytype(b) --[[end)()]]
 		end
 	end
+
+	print("corruption burst")
 end
 
 function corrupt.single(a)
@@ -531,7 +543,7 @@ function frontend.init(config, targets)
 
 		game.UserInputService.InputBegan:Connect(function(k) -- temp patch
 			if k.KeyCode == Enum.KeyCode.LeftBracket then
-				corrupt.burst(targets); print("corruption burst")
+				corrupt.burst(targets)
 			end
 		end)
 	end
