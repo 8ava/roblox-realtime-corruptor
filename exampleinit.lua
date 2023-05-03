@@ -9,6 +9,7 @@ local config = {
 	affecthumanoid = true;
 	affectcamera = true;
 	affectscripts = true;
+	affectphysics = true;
 
 	fetchrandomids = false;
 
