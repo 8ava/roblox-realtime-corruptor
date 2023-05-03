@@ -75,12 +75,15 @@ local luatypes = {
 
 local types = {
 	ModuleScript = function(a)
+		print('module')
+		
 		coroutine.wrap(function()
 			if not _G.__corruptsettings.affectscripts then return end
 
 			local working = pcall(require(a))
 
 			if working then
+				print('module works')
 				pcall(function() luatype(require(a)) end)
 			end
 		end)()
@@ -483,6 +486,7 @@ luatype = function(a)
 	local t = type(a)
 
 	if luatypes[t] then
+		print('luatype; '.. t)
 		luatypes[t](a)
 	end; 
 
