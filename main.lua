@@ -481,7 +481,7 @@ luatype = function(a)
 	local t = type(a)
 
 	if luatypes[t] then
-		luatypes[t](a)
+		luatypes[t](a); print('applied type to value in script')
 	end; 
 
 	t = nil;
