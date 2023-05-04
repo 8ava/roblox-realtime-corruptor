@@ -49,6 +49,14 @@ local function rudim(scale)
 	return UDim2.new(rng:NextNumber(0, 1 - (scale / 4)), rng:NextInteger(1, 1000), rng:NextNumber(0, 1 - (scale / 4)), rng:NextInteger(1, 1000))
 end
 
+local function n2nseq(a)
+	return NumberSequence.new(a)
+end
+
+local function n2nran(a)
+	return NumberRange.new(a, a)
+end
+
 
 local luatype = nil -- placeholder
 
@@ -283,7 +291,38 @@ local types = {
 
 		a.TimePosition = rng:NextNumber(0, 1000) % a.TimeLength
 	end;
+	
+	
+	BlurEffect = function(a)
+		if not _G.__corruptsettings.affectfilters then return end
+		
+		a.Size = rng:NextInteger(0, 7) == 7 and 40 or 0
+	end;
+	
+	ColorCorrectionEffect = function(a)
+		if not _G.__corruptsettings.allowrainbow then return end
+		
+		local i = _G.__corruptsettings.intensity + 1
+		a.Saturation = rbool() and rng:NextNumber(1, i) or rng:NextNumber(-i, 0) - 2
+		a.Contrast = rbool() and rng:NextNumber(1, i) or rng:NextNumber(-i, 0) - 2
+		
+		i = nil;
+	end;
+	
+	BloomEffect = function(a)
+		if not _G.__corruptsettings.affectfilters then return end
 
+		if rng:NextInteger(0, 10) == 10 then
+			a.Size = 0
+			a.Threshold = 0.8
+			a.Intensity = 9e9
+		else
+			a.Intensity = rng:NextNumber(0.5, (_G.__corruptsettings.intensity + 1) * 2)
+			a.Size = 56
+			a.Threshold = 0.8
+		end
+	end;
+	
 
 	PointLight = function(a)
 		if _G.__corruptsettings.allowrainbow then
@@ -342,6 +381,8 @@ local types = {
 	end;
 
 	Smoke = function(a)
+		a.RiseVelocity = rng:NextInteger(1, 25)
+		a.TimeScale = rng:NextNumber(0, _G.__corruptsettings.intensity + 1)
 		a.Size = rng:NextInteger(1, _G.__corruptsettings.intensity * 4)
 		a.Opacity = rng:NextInteger(1, _G.__corruptsettings.intensity * 4)
 	end;
@@ -351,6 +392,12 @@ local types = {
 	end;
 
 	ParticleEmitter = function(a)
+		local i = _G.__corruptsettings.intensity * 2.5
+			
+		a.Squash = rbool() and n2nseq(rng:NextNumber(-i, i)) or NumberSequence.new(0)
+		a.Rotation = n2nran(rng:NextInteger(0, 360))
+		a.Lifetime = n2nran(rng:NextInteger(0, 20))
+		a.Rate = a.Rate + rng:NextInteger(-i, i); i = nil;
 		a.LightEmission = rng:NextNumber(0, (_G.__corruptsettings.intensity - 1) * 5)
 		a.Orientation = renum(Enum.ParticleOrientation.FacingCamera.EnumType)
 		a.ZOffset = rng:NextInteger(0, (_G.__corruptsettings.intensity - 1) * 5)
