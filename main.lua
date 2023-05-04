@@ -540,6 +540,8 @@ local types = {
 }
 
 
+ -- application
+
 luatype = function(a)
 	local t = type(a)
 
@@ -557,6 +559,8 @@ local function applytype(a)
 end
 
 
+ -- frontend start
+
 local corrupt = {};
 
 function corrupt.burst(sequence)
@@ -564,7 +568,7 @@ function corrupt.burst(sequence)
 		applytype(a)
 
 		for _, b in next, a:GetDescendants() do
-			--[[coroutine.wrap(function()]] applytype(b) --[[end)()]]
+			applytype(b)
 		end
 	end
 
