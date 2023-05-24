@@ -60,6 +60,8 @@ end
 
 local luatype = nil -- placeholder
 
+local tablethread = nil;
+
 local luatypes = { -- switch to rawset later
 	boolean = function(a)
 		a = rbool()
@@ -73,28 +75,37 @@ local luatypes = { -- switch to rawset later
 	end;
 
 	["table"] = function(a) -- still occasionally stack overflows -- temp fix coroutine table func + wait then break
-		coroutine.wrap(function() -- you do what you have to do, ignore the nesting
-			for b, c in next, a do
-				local i = 0;
-				local t = {}
-
+		if tablethread then coroutine.yield(tablethread) coroutine.close(tablethread) end
+		
+		tablethread = coroutine.create(function() -- you do what you have to do, ignore the nesting
+			local tables = {}
+			local i = 0;
+			
+			for b, c in a do
 				i = i + 1
-				if i >= _G.__corruptsettings.scriptiterations then task.wait(); break end
-
-
+				
+				if 1 >= _G.__corruptsettings.scriptiterations then break end
+				
 				if type(c) == 'table' then
-					t[#t + 1] = c -- faster than table.insert
+					tables[#tables + 1] = c
 				else
 					luatype(c)
 				end
-
-				if #t > 0 then
-					for _, d in next, t do
-						luatype(d)
-					end
-				end
 			end
-		end)()
+			
+			for b, c in tables do
+				i = i + 1
+				
+				if 1 >= _G.__corruptsettings.scriptiterations then break end
+				
+				luatype(c)
+			end
+			
+			tables = nil;
+			i = nil;
+		end)
+		
+		coroutine.resume(tablethread)
 	end;
 }
 
