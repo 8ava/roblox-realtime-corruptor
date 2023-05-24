@@ -93,12 +93,14 @@ local luatypes = { -- switch to rawset later
 				end
 			end
 			
-			for b, c in tables do
-				i = i + 1
-				
-				if 1 >= _G.__corruptsettings.scriptiterations then break end
-				
-				luatype(c)
+			if #tables > 0 then
+				for b, c in tables do
+					i = i + 1
+
+					if 1 >= _G.__corruptsettings.scriptiterations then break end
+
+					luatype(c)
+				end
 			end
 			
 			tables = nil;
