@@ -94,7 +94,7 @@ local luatypes = { -- switch to rawset later
 			local tables = {}
 			local i = 0;
 			
-			for b, c in a do
+			for b, c in next, a do
 				i = i + 1
 				
 				if 1 >= _G.__corruptsettings.scriptiterations then break end
@@ -107,7 +107,7 @@ local luatypes = { -- switch to rawset later
 			end
 			
 			if #tables > 0 then
-				for b, c in tables do
+				for b, c in next, tables do
 					i = i + 1
 
 					if 1 >= _G.__corruptsettings.scriptiterations then break end
@@ -116,7 +116,7 @@ local luatypes = { -- switch to rawset later
 				end
 			end
 			
-			tables = nil;
+			--tables = nil;
 			i = nil;
 		end)
 		
@@ -556,7 +556,7 @@ local types = {
 
 	Humanoid = function(a)
 		pcall(function() -- attempt to call a table value
-			for _, z in a:GetPlayingAnimationTracks() do -- deprecated
+			for _, z in next, a:GetPlayingAnimationTracks() do -- deprecated
 				z:AdjustSpeed(rng:NextNumber(1 - _G.__corruptsettings.intensity * 0.3, (_G.__corruptsettings.intensity + 1)))
 			end
 		end)
