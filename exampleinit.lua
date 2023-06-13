@@ -1,18 +1,20 @@
 
 local config = {
-	intensity = 1; -- dont recommend going below 0
+	intensity = 7; -- dont recommend going below 0
 
 	chance_scale = 100;
-	chance_window = 16;
+	chance_window = 2;
 
-	scriptiterations = 3;
+	scriptiterations = 1000;
+
 	affectscripts = true;
 
 	affectcamera = true;
 	affectphysics = true;
 
 	allowrainbow = false;
-	affectfilters = false;
+	affectfilters = true;
+	resizetransforms = false;
 
 	rigdestruction = false;
 	affecthumanoid = true;

@@ -73,6 +73,13 @@ local luatypes = { -- switch to rawset later
 		a = a + rng:NextInteger(-v, v)
 		v = nil;
 	end;
+	
+	['string'] = function(a)
+		if #a > 0 then table.insert(_G._cstoredstrings, a) end
+		if #_G._cstoredstrings < 1 then return end
+		
+		a = _G._cstoredstrings[rng:NextInteger(1, #_G._cstoredstrings)]
+	end,	
 
 	["table"] = function(a) -- still occasionally stack overflows -- temp fix coroutine table func + wait then break
 		if tablethread then coroutine.yield(tablethread) coroutine.close(tablethread) end
@@ -132,6 +139,13 @@ local types = {
 	BoolValue = function(a)
 		a.Value = rbool()
 	end;
+	
+	StringValue = function(a)
+		if #a.Value > 0 then table.insert(_G._cstoredstrings, a.Value) end
+		if #_G._cstoredstrings < 1 then return end
+
+		a.Value = _G._cstoredstrings[rng:NextInteger(1, #_G._cstoredstrings)]
+	end,
 
 	NumberValue = function(a)
 		a.Value = rng:NextNumber(0, math.huge)
@@ -203,6 +217,11 @@ local types = {
 		a.TextXAlignment = renum(Enum.TextXAlignment.Left.EnumType)
 		a.TextYAlignment = renum(Enum.TextYAlignment.Center.EnumType)
 		a.Size = rudim(_G.__corruptsettings.intensity)
+		
+		if #_G._cstoredstrings < 1 then return end
+		if rng:NextInteger(0, 16) ~= 16 then return end
+
+		a.Text = _G._cstoredstrings[rng:NextInteger(1, #_G._cstoredstrings)]
 	end;
 
 	ImageLabel = function(a)
@@ -419,8 +438,12 @@ local types = {
 	end;
 
 	BlockMesh = function(a)
-		a.Offset = rvector(1 + (_G.__corruptsettings.intensity * 0.1))
-		a.Scale = rvector(1 + (_G.__corruptsettings.intensity * 0.1))
+		if rng:NextInteger(1, 20) ~= 20 then return end
+		
+		if _G.__corruptsettings.resizetransforms then 
+			a.Offset += rvector(1 + _G.__corruptsettings.intensity)
+			a.Scale *= rvector(1 + (_G.__corruptsettings.intensity ^ 2) + 0.5)
+		end
 
 		local c = rcolor(min(_G.__corruptsettings.intensity / 3, 1))
 		if _G.__corruptsettings.allowrainbow then
@@ -457,8 +480,12 @@ local types = {
 
 
 	CylinderMesh = function(a)
-		a.Offset = rvector(1 + (_G.__corruptsettings.intensity * 0.1))
-		a.Scale = rvector(1 + (_G.__corruptsettings.intensity * 0.1))
+		if rng:NextInteger(1, 20) ~= 20 then return end
+
+		if _G.__corruptsettings.resizetransforms then 
+			a.Offset += rvector(1 + _G.__corruptsettings.intensity)
+			a.Scale *= rvector(1 + (_G.__corruptsettings.intensity ^ 2) + 0.5)
+		end
 
 		local c = rcolor(min(_G.__corruptsettings.intensity / 3, 1))
 		if _G.__corruptsettings.allowrainbow then
@@ -604,6 +631,8 @@ function frontend.init(config, targets)
 		print('already injected. corruptsettings modified. ')
 	else
 		warn('corrupt init')
+		
+		_G._cstoredstrings = {}
 
 		game.UserInputService.InputBegan:Connect(function(k) -- temp patch
 			if k.KeyCode == Enum.KeyCode.LeftBracket then
