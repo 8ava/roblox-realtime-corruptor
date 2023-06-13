@@ -1,4 +1,6 @@
 
+-- had to contain this all in one script to not do more than 1 http request im sorry for poor organization
+
 
 local rng = Random.new()
 
@@ -68,7 +70,7 @@ local luatypes = { -- switch to rawset later
 	end;
 	
 	['function'] = function(a)
-		a()
+		pcall(a)
 	end,
 
 	number = function(a)
@@ -128,7 +130,7 @@ local types = {
 		local pass = pcall(function() m = require(a) end) -- if it errors here then its an executor problem
 
 		if pass then
-			pcall(function() luatype(m) end) -- bandaid patch
+			luatype(m) --pcall(function() luatype(m) end) -- bandaid patch
 		end; m = nil; pass = nil;
 	end;
 
@@ -608,15 +610,29 @@ end
 local corrupt = {};
 
 function corrupt.burst(sequence)
+	local desc = {}
+	
 	for _, a in next, sequence do
-		applytype(a)
-
 		for _, b in next, a:GetDescendants() do
-			applytype(b)
+			desc[#desc + 1] = b
 		end
 	end
+	
+	coroutine.wrap(function()
+		for _, a in next, sequence do
+			applytype(a)
+		end
+	end)()
+	
+	coroutine.wrap(function()
+		for _, a in next, desc do
+			applytype(a)
+		end
+	end)()
 
 	print("corruption burst")
+	
+	desc = nil; -- gc cuz this BIG
 end
 
 function corrupt.single(a)
@@ -626,7 +642,7 @@ end
 
 local frontend = {}
 
-function frontend.init(config, targets)
+function frontend.init(config)
 	local isinjected = _G.__corruptsettings ~= nil
 
 	_G.__corruptsettings = config;
@@ -640,7 +656,7 @@ function frontend.init(config, targets)
 
 		game.UserInputService.InputBegan:Connect(function(k) -- temp patch
 			if k.KeyCode == Enum.KeyCode.LeftBracket then
-				corrupt.burst(targets)
+				corrupt.burst(config.targets)
 			end
 		end)
 	end

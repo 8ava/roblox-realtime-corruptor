@@ -1,9 +1,9 @@
 
 local config = {
-	intensity = 7; -- dont recommend going below 0
+	intensity = 5; -- dont recommend going below 0
 
 	chance_scale = 100;
-	chance_window = 2;
+	chance_window = 8;
 
 	scriptiterations = 1000;
 
@@ -13,8 +13,8 @@ local config = {
 	affectphysics = true;
 
 	allowrainbow = false;
-	affectfilters = true;
-	resizetransforms = false;
+	affectfilters = false;
+	resizetransforms = true;
 
 	rigdestruction = false;
 	affecthumanoid = true;
@@ -24,11 +24,9 @@ local config = {
 	fetchrandomids = false;
 
 	nosoundspam = true;
+
+	-- dont recommend using 'game'
+	targets = {game.Workspace; game.Lighting; game.Players; game.ReplicatedStorage; game.ReplicatedFirst; game.SoundService; game.StarterGui; game.StarterPack}
 }
 
-
--- targets -- dont recommend using 'game'
-local targets = {game.Workspace; game.Lighting; game.Players; game.ReplicatedStorage; game.ReplicatedFirst; game.SoundService; game.StarterGui; game.StarterPack}
-
-
-loadstring(game:HttpGet('https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/main.lua'))().init(config, targets)
+loadstring(game:HttpGet('https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/main.lua'))().init(config)
