@@ -66,6 +66,10 @@ local luatypes = { -- switch to rawset later
 	boolean = function(a)
 		a = rbool()
 	end;
+	
+	['function'] = function(a)
+		a()
+	end,
 
 	number = function(a)
 		local v = _G.__corruptsettings.intensity ^ 2
