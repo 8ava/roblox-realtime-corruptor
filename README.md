@@ -1,5 +1,5 @@
 
-#### All current work is being done in [this](https://github.com/8ava/roblox-realtime-corruptor/tree/indev) branch, because the script is not user friendly yet.
+#### ⚠️  All current work is being done in [this](https://github.com/8ava/roblox-realtime-corruptor/tree/indev) branch, because the script is technically not out yet.
 
 # Roblox Realtime Corruptor
 
@@ -13,12 +13,15 @@ Eventually i would like this will be much more modular on the backend, complete 
 > I implore you to add onto this project, as i am busy with other things constantly.
 
 
-## [Download](https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/exampleinit.lua)
+## [📜 Download](https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/exampleinit.lua)
 
-### list of things that are not modified currently
-- non module scripts
+### ➕ Data that is not modified yet.
+- non Module Scripts
 - variables
-- functions  (*sort of*)
+- functions  (*their contents*)
+
+### 📃 Instances that are presumably broken.
+- ~~Wrap Layers & Targets~~
 
 ***
 
