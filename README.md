@@ -2,6 +2,7 @@
 #### ⚠️  All current work is being done in [this](https://github.com/8ava/roblox-realtime-corruptor/tree/indev) branch, because the script is technically not out yet.
 
 # Roblox Realtime Corruptor
+<a href="https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/exampleinit.lua"><img src="https://img.shields.io/badge/Copy-rRTC-33eb4f.svg" alt="Download Badge" /></a>
 
 This Luau script essentially mimics the [Real-Time Corruptor](https://redscientist.com/rtc) by Redscientist. 
 
