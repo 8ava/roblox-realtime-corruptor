@@ -1,0 +1,35 @@
+
+-- this will cache values by type and return the first one from the stored list
+-- very similar to Mixer
+
+
+local store = {}
+
+
+local function handle(primative)
+	local type_ = type(primative)
+	local cache = store[type_]
+	
+	if cache then
+		return cache[1]
+	else
+		store[type_] = {}
+		
+		table.insert(store[type_], primative)
+		
+		
+		return primative
+	end
+end
+
+
+local class = {
+	name = 'Singularity Engine';
+	description = 'Corrupts values by setting every value to the first of its kind.'
+}
+
+function class.get(primative)
+	return handle(primative)
+end
+
+return class
