@@ -16,6 +16,14 @@ Eventually i would like this will be much more modular on the backend, complete 
 
 ## [📜 Download](https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/exampleinit.lua)
 
+## 🚦 Roadmap
+- Add User Interface
+- Add Cached Settings
+- rewrite most of backend
+- separate into multiple scripts for organization
+- Add Stockpile (?) or something similar
+***
+
 ### ➕ Data that is not modified yet.
 - non Module Scripts
 - variables
@@ -24,6 +32,5 @@ Eventually i would like this will be much more modular on the backend, complete 
 ### 📃 Instances that are presumably broken.
 - ~~Wrap Layers & Targets~~
 
-***
 
-i will add something to the main branch once i get a gui up, or someone else wants to do it for me :3
+> i will add something to the main branch once i get a gui up, or someone else wants to do it for me :3
