@@ -11,7 +11,7 @@ function class.execute()
 	for _, a in next, class.FilterDescendantsSequence do
 		instance_handler.set(a, class.CurrentEngine.get)
 		
-		for _, b in a:GetDescendants() do
+		for _, b in next, a:GetDescendants() do
 			instance_handler.set(b, class.CurrentEngine.get)
 		end
 	end
