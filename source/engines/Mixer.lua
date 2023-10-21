@@ -1,11 +1,30 @@
 
 -- this will cache values by type and return a random one from the stored list
 
-local store = {}
+local store = {
+	Enum = {}
+}
 
 
 local function handle(primative)
 	local type_ = typeof(primative)
+	
+	-- need to handle enums differently
+	if type_ == 'EnumItem' then
+		if store.Enum[primative.EnumType] then
+			table.insert(store.Enum[primative.EnumType], primative)
+
+			return store.Enum[primative.EnumType][_G._RTCEnvironment._RANDOM:NextInteger(1, #store.Enum[primative.EnumType])]
+		else
+			store.Enum[primative.EnumType] = {}
+			
+			table.insert(store.Enum[primative.EnumType], primative)
+			
+			
+			return primative
+		end
+	end
+	
 	
 	if store[type_] then
 		table.insert(store[type_], primative)
