@@ -43,7 +43,7 @@ end
 
 local class = {
 	name = 'Mixer Engine';
-	description = 'Corrupts values by choosing from a list of similar values.'
+	description = 'Corrupts values by swapping them with similar values.'
 }
 
 function class.get(primative)
