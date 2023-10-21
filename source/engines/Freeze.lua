@@ -1,5 +1,8 @@
 
--- this will use metatables to prevent values from changing
+-- this will use caching to prevent values from changing
+
+local cache = {}
+
 
 local class = {
 	name = 'Freeze Engine';
@@ -7,14 +10,15 @@ local class = {
 }
 
 function class.get(primative)
-	local metadata = getmetatable(primative)
+	local stored = cache[primative]
 	
-	setmetatable(getmetatable(primative), {__newindex = function()
-		return
-	end,})
-	
-	
-	return primative
+	if stored then
+		return stored
+	else
+		cache[primative] = primative -- yes i know these can overwrite but that makes it more fun! :3
+		
+		return primative
+	end
 end
 
 
