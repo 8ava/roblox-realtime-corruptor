@@ -2,7 +2,7 @@
 #### ⚠️  All current work is being done in [this](https://github.com/8ava/roblox-realtime-corruptor/tree/indev) branch, because the script is technically not out yet.
 
 # Roblox Realtime Corruptor
-<a href="https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/exampleinit.lua"><img src="https://img.shields.io/badge/Copy-rRTC-33eb4f.svg" alt="Download Badge" /></a>
+<a href="https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/loadstring.lua"><img src="https://img.shields.io/badge/Copy-rRTC-33eb4f.svg" alt="Download Badge" /></a>
 
 This Luau script essentially mimics the [Real-Time Corruptor](https://redscientist.com/rtc) by Redscientist. 
 
@@ -14,7 +14,7 @@ Eventually i would like this will be much more modular on the backend, complete 
 > I implore you to add onto this project, as i am busy with other things constantly.
 
 
-## [📜 Download](https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/exampleinit.lua)
+## [📜 Download](https://raw.githubusercontent.com/8ava/roblox-realtime-corruptor/indev/loadstring.lua)
 
 ## 🚦 Roadmap
 - Add User Interface
