@@ -1,25 +1,20 @@
 
 local instances = {
 	Workspace = function(instance, method)
-		--[[if _G.__corruptsettings.affectphysics then
-			local i = _G.__corruptsettings.intensity * 2
-			a.Gravity = 196.2 + rng:NextNumber(-i, i); i = nil;
-			a.GlobalWind = rvector(_G.__corruptsettings.intensity)
-		end]]
+		instance.Gravity = method(instance.Gravity)
+		instance.GlobalWind = method(instance.GlobalWind)
+	end;
+	
+	-- Values
+	BoolValue = function(instance, method)
+		instance.Value = method(instance.Value)
 	end;
 
-	--[[BoolValue = function(a)
-		a.Value = rbool()
-	end;
-
-	StringValue = function(a)
-		if #a.Value > 0 then table.insert(_G._cstoredstrings, a.Value) end
-		if #_G._cstoredstrings < 1 then return end
-
-		a.Value = _G._cstoredstrings[rng:NextInteger(1, #_G._cstoredstrings)]
+	StringValue = function(instance, method)
+		instance.Value = method(instance.Value)
 	end,
 
-	NumberValue = function(a)
+	--[[NumberValue = function(a)
 		a.Value = rng:NextNumber(0, math.huge)
 	end;
 

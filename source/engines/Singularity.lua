@@ -2,16 +2,14 @@
 -- this will cache values by type and return the first one from the stored list
 -- very similar to Mixer
 
-
 local store = {}
 
 
 local function handle(primative)
 	local type_ = type(primative)
-	local cache = store[type_]
 	
-	if cache then
-		return cache[1]
+	if store[type_] then
+		return store[type_][1]
 	else
 		store[type_] = {}
 		

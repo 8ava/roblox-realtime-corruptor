@@ -1,20 +1,16 @@
 
 -- this will cache values by type and return a random one from the stored list
 
-
-local random = _G._rtc_random
-
 local store = {}
 
 
 local function handle(primative)
-	local type_ = type(primative)
-	local cache = store[type_]
+	local type_ = typeof(primative)
 	
-	if cache then
-		table.insert(cache, primative)
+	if store[type_] then
+		table.insert(store[type_], primative)
 		
-		return cache[random:NextNumber(1, #cache)]
+		return store[type_][_G._RTCEnvironment._RANDOM:NextInteger(1, #store[type_])]
 	else
 		store[type_] = {}
 		
