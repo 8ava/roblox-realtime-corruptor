@@ -1,14 +1,14 @@
 
 local instances = {
-	--[[Workspace = function(a)
-		if _G.__corruptsettings.affectphysics then
+	Workspace = function(instance, method)
+		--[[if _G.__corruptsettings.affectphysics then
 			local i = _G.__corruptsettings.intensity * 2
 			a.Gravity = 196.2 + rng:NextNumber(-i, i); i = nil;
 			a.GlobalWind = rvector(_G.__corruptsettings.intensity)
-		end
+		end]]
 	end;
 
-	BoolValue = function(a)
+	--[[BoolValue = function(a)
 		a.Value = rbool()
 	end;
 
@@ -456,11 +456,10 @@ local instances = {
 local module = {}
 
 function module.set(instance, method)
-	if instances[typeof(instance)] then
-		instances[typeof(instance)](method)
-		
+	if instances[instance.ClassName] then
+		instances[instance.ClassName](instance, method)
 	else
-		print(instance.ClassName.. ' not found under list') -- most executors still dont have string interpolation
+		--print(instance.ClassName.. ' not found under list') -- most executors still dont have string interpolation
 	end
 end
 
