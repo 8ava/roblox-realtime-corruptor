@@ -150,6 +150,10 @@ local instances = {
 		instance.Texture = method(instance.Texture)
 	end;
 	
+	MaterialVariant = function(instance)
+		instance.CustomPhysicalProperties = method(instance.CustomPhysicalProperties)
+	end;
+	
 	
 	-- Post Processing
 	BlurEffect = function(instance)
@@ -219,26 +223,65 @@ local instances = {
 		instance.Range = method(instance.Range)
 		instance.Angle = method(instance.Angle)
 	end;
+	
+	
+	-- Mesh
+	SpecialMesh = function(instance)
+		instance.VertexColor = method(instance.VertexColor)
 
-	--[[SpecialMesh = function(a)
-		local c = rcolor(min(_G.__corruptsettings.intensity / 3, 1))
+		--instance.MeshId = method(instance.MeshId)
+		--instance.TextureId = method(instance.TextureId)
 
-		if _G.__corruptsettings.allowrainbow then
-			a.VertexColor = Vector3.new(c.R, c.G, c.B)
-		end
+		instance.Scale = method(instance.Scale)
+		instance.Offset = method(instance.Offset)
+	end;
+	
+	BlockMesh = function(instance)
+		instance.VertexColor = method(instance.VertexColor)
+		
+		instance.Scale = method(instance.Scale)
+		instance.Offset = method(instance.Offset)
+	end;
+	
+	CylinderMesh = function(instance)
+		instance.VertexColor = method(instance.VertexColor)
 
-		if _G.__corruptsettings.fetchrandomids then
-			a.MeshId = rid()
-			a.TextureId = rid()
-		end
-
-		a.Scale = rvector(1 + (_G.__corruptsettings.intensity * 0.1))
-		a.Offset = rvector(1 + (_G.__corruptsettings.intensity * 0.1))
-
-		c = nil;
+		instance.Scale = method(instance.Scale)
+		instance.Offset = method(instance.Offset)
+	end;
+	
+	Part = function(instance)
+		instance.CustomPhysicalProperties = method(instance.CustomPhysicalProperties)
 	end;
 
-	Smoke = function(a)
+	MeshPart = function(instance)
+		instance.Size = method(instance.Size)
+
+		instance.CustomPhysicalProperties = method(instance.CustomPhysicalProperties)
+	end;
+	
+	
+	-- Bones
+	Motor6D = function(instance)
+		instance.C1 = method(instance.C1)
+		instance.C0 = method(instance.C0)
+	end;
+
+	Weld = function(instance)
+		instance.C1 = method(instance.C1)
+		instance.C0 = method(instance.C0)
+	end;
+	
+	Bone = function(instance)
+		instance.Axis = method(instance.Axis)
+		instance.SecondaryAxis = method(instance.SecondaryAxis)
+
+		instance.Transform = method(instance.Transform)
+	end;
+	
+	
+
+	--[[Smoke = function(a)
 		a.RiseVelocity = rng:NextInteger(1, 25)
 		a.TimeScale = rng:NextNumber(0, _G.__corruptsettings.intensity + 1)
 		a.Size = rng:NextInteger(1, _G.__corruptsettings.intensity * 4)
@@ -263,63 +306,11 @@ local instances = {
 		a.VelocityInheritance = rng:NextNumber(0, (_G.__corruptsettings.intensity - 1) * 3)
 	end;
 
-	BlockMesh = function(a)
-		if rng:NextInteger(1, 20) ~= 20 then return end
-
-		if _G.__corruptsettings.resizetransforms then 
-			a.Offset += rvector(1 + _G.__corruptsettings.intensity)
-			a.Scale *= rvector(1 + (_G.__corruptsettings.intensity ^ 2) + 0.5)
-		end
-
-		local c = rcolor(min(_G.__corruptsettings.intensity / 3, 1))
-		if _G.__corruptsettings.allowrainbow then
-			a.VertexColor = Vector3.new(c.R, c.G, c.B)
-		end
-
-		c = nil;
-	end;
+	
 
 
-	Motor6D = function(a)
-		if not _G.__corruptsettings.rigdestruction then return end
+	
 
-		a.C1 = a.C1 * rcf()
-		a.C0 = a.C0 * rcf()
-		--a.Transform = a.Transform * rcf()
-	end;
-
-	Bone = function(a)
-		if not _G.__corruptsettings.rigdestruction then return end
-
-		a.Axis = rvector(_G.__corruptsettings.intensity)
-		a.SecondaryAxis = rvector(_G.__corruptsettings.intensity)
-
-		a.Transform = rcf()
-	end;
-
-	Weld = function(a)
-		if not _G.__corruptsettings.rigdestruction then return end
-
-		a.C1 = a.C1 * rcf()
-		a.C0 = a.C0 * rcf()
-	end;
-
-
-	CylinderMesh = function(a)
-		if rng:NextInteger(1, 20) ~= 20 then return end
-
-		if _G.__corruptsettings.resizetransforms then 
-			a.Offset += rvector(1 + _G.__corruptsettings.intensity)
-			a.Scale *= rvector(1 + (_G.__corruptsettings.intensity ^ 2) + 0.5)
-		end
-
-		local c = rcolor(min(_G.__corruptsettings.intensity / 3, 1))
-		if _G.__corruptsettings.allowrainbow then
-			a.VertexColor = Vector3.new(c.R, c.G, c.B)
-		end
-
-		c = nil;
-	end;
 
 	Camera = function(a)
 		if _G.__corruptsettings.affectcamera then
@@ -327,29 +318,6 @@ local instances = {
 		end
 
 		a.Focus = CFrame.new(rvector(_G.__corruptsettings.intensity))
-	end;
-
-
-	Part = function(a)
-		if (a.AssemblyLinearVelocity.Magnitude > 0) and _G.__corruptsettings.affectphysics then
-			a.CustomPhysicalProperties = PhysicalProperties.new(rng:NextNumber(0, 100), rng:NextNumber(0, 2), rng:NextNumber(0, 1))
-		end
-	end;
-
-	MeshPart = function(a)
-		if a.CanCollide == false and rng:NextInteger(1, 222) == 222 then
-			a.Size = a.Size + rvector(_G.__corruptsettings.intensity ^ 9)
-		end
-
-		if (a.AssemblyLinearVelocity.Magnitude > 0) and _G.__corruptsettings.affectphysics then
-			a.CustomPhysicalProperties = PhysicalProperties.new(rng:NextNumber(0, 100), rng:NextNumber(0, 2), rng:NextNumber(0, 1))
-		end
-	end;
-
-	MaterialVariant = function(a)
-		if  _G.__corruptsettings.affectphysics then
-			a.CustomPhysicalProperties = PhysicalProperties.new(rng:NextNumber(0, 100), rng:NextNumber(0, 2), rng:NextNumber(0, 1))
-		end
 	end;
 
 
