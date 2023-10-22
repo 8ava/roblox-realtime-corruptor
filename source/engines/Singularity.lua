@@ -40,7 +40,7 @@ end
 
 local class = {
 	name = 'Singularity Engine';
-	description = 'Corrupts values by setting every value to the first of its kind.'
+	description = 'Corrupts values by setting it to the first of its kind.'
 }
 
 function class.get(primative)
