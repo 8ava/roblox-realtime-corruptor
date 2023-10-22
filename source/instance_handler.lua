@@ -10,16 +10,7 @@ end
 
 
 local instances = {
-	ModuleScript = function(instance) -- idk if this works
-		script_handler.set(require(instance))
-	end;
-	
-	Workspace = function(instance)
-		instance.Gravity = method(instance.Gravity)
-		instance.GlobalWind = method(instance.GlobalWind)
-	end;
-	
-	
+
 	-- Values
 	BoolValue = instance_value;
 	StringValue = instance_value;
@@ -141,7 +132,7 @@ local instances = {
 	-- Textures
 	Texture = function(instance)
 		instance.ZIndex = method(instance.ZIndex)
-		instance.Texture = method(instance.Texture)
+		--instance.Texture = method(instance.Texture)
 		
 		instance.OffsetStudsU = method(instance.OffsetStudsU)
 		instance.OffsetStudsV = method(instance.OffsetStudsV)
@@ -152,7 +143,7 @@ local instances = {
 	Decal = function(instance)
 		instance.ZIndex = method(instance.ZIndex)
 		instance.Color3 = method(instance.Color3)
-		instance.Texture = method(instance.Texture)
+		--instance.Texture = method(instance.Texture)
 	end;
 	
 	MaterialVariant = function(instance)
@@ -174,6 +165,32 @@ local instances = {
 		instance.Size = method(instance.Size)
 		instance.Threshold = method(instance.Threshold)
 		instance.Intensity = method(instance.Intensity)
+	end;
+	
+	
+	-- Particles
+	Smoke = function(instance)
+		instance.TimeScale = method(instance.TimeScale)
+		instance.Size = method(instance.Size)
+		instance.Opacity = method(instance.Opacity)
+	end;
+
+	Fire = function(instance:Fire)
+		instance.TimeScale = method(instance.TimeScale)
+		instance.Size = method(instance.Size)
+		instance.Heat = method(instance.Heat)
+	end;
+
+	ParticleEmitter = function(instance)
+		instance.Squash = method(instance.Squash)
+		instance.Rotation = method(instance.Rotation)
+		instance.Lifetime = method(instance.Lifetime)
+		instance.Rate = method(instance.Rate)
+		instance.LightEmission = method(instance.LightEmission)
+		instance.Orientation = method(instance.Orientation)
+		instance.ZOffset = method(instance.ZOffset)
+		instance.Acceleration = method(instance.Acceleration)
+		instance.VelocityInheritance = method(instance.VelocityInheritance)
 	end;
 
 	
@@ -285,76 +302,40 @@ local instances = {
 	end;
 	
 	
-
-	--[[Smoke = function(a)
-		a.RiseVelocity = rng:NextInteger(1, 25)
-		a.TimeScale = rng:NextNumber(0, _G.__corruptsettings.intensity + 1)
-		a.Size = rng:NextInteger(1, _G.__corruptsettings.intensity * 4)
-		a.Opacity = rng:NextInteger(1, _G.__corruptsettings.intensity * 4)
+	-- misc
+	ModuleScript = function(instance)
+		script_handler.set(require(instance))
 	end;
 
-	Fire = function(a)
-		a.Heat = rng:NextInteger(1, _G.__corruptsettings.intensity * 4)
+	Workspace = function(instance)
+		instance.Gravity = method(instance.Gravity)
+		instance.GlobalWind = method(instance.GlobalWind)
 	end;
 
-	ParticleEmitter = function(a)
-		local i = _G.__corruptsettings.intensity * 2.5
-
-		a.Squash = rbool() and n2nseq(rng:NextNumber(-i, i)) or NumberSequence.new(0)
-		a.Rotation = n2nran(rng:NextInteger(0, 360))
-		a.Lifetime = n2nran(rng:NextInteger(0, 20))
-		a.Rate = a.Rate + rng:NextInteger(-i, i); i = nil;
-		a.LightEmission = rng:NextNumber(0, (_G.__corruptsettings.intensity - 1) * 5)
-		a.Orientation = renum(Enum.ParticleOrientation.FacingCamera.EnumType)
-		a.ZOffset = rng:NextInteger(0, (_G.__corruptsettings.intensity - 1) * 5)
-		a.Acceleration = rvector((_G.__corruptsettings.intensity - 1) * 3)
-		a.VelocityInheritance = rng:NextNumber(0, (_G.__corruptsettings.intensity - 1) * 3)
+	Camera = function(instance)
+		instance.MaxAxisFieldOfView = method(instance.MaxAxisFieldOfView)
+		instance.CameraType = method(instance.CameraType)
+		instance.Focus = method(instance.Focus)
 	end;
-
 	
+	Humanoid = function(instance)
+		instance.JumpPower = method(instance.JumpPower)
+		instance.WalkSpeed = method(instance.WalkSpeed)
 
-
-	
-
-
-	Camera = function(a)
-		if _G.__corruptsettings.affectcamera then
-			a.MaxAxisFieldOfView = rng:NextNumber(70 - (_G.__corruptsettings.intensity * 0.4), 134)
+		instance.CameraOffset = method(instance.CameraOffset)
+		instance.HipHeight = method(instance.HipHeight)
+		instance.AutoRotate = method(instance.AutoRotate)
+		instance.MaxSlopeAngle = method(instance.MaxSlopeAngle)
+		instance.BreakJointsOnDeath = method(instance.BreakJointsOnDeath)
+		
+		for _, animation in next, instance:GetPlayingAnimationTracks() do
+			animation:AdjustSpeed(method(animation.Speed))
 		end
-
-		a.Focus = CFrame.new(rvector(_G.__corruptsettings.intensity))
 	end;
 
-
-	Humanoid = function(a)
-		pcall(function() -- attempt to call a table value
-			for _, z in next, a:GetPlayingAnimationTracks() do -- deprecated
-				z:AdjustSpeed(rng:NextNumber(1 - _G.__corruptsettings.intensity * 0.3, (_G.__corruptsettings.intensity + 1)))
-			end
-		end)
-
-		if not _G.__corruptsettings.affecthumanoid then return end
-
-		local i = _G.__corruptsettings.intensity * 9
-		a.JumpPower = 50 + rng:NextNumber(-i , i)
-		a.WalkSpeed = 16 + rng:NextNumber(-i , i)
-
-		a.CameraOffset = rvector(_G.__corruptsettings.intensity)
-		local i2 = i * 0.3
-		a.HipHeight = 2 + rng:NextNumber(-i2 , i2)
-		a.AutoRotate = rbool()
-		local i3 = i * 5
-		a.MaxSlopeAngle = 80 + rng:NextNumber(-i3 , i3)
-		a.BreakJointsOnDeath = rbool()
-
-		i = nil;
-		i2 = nil;
-		i3 = nil;
+	Tween = function(instance)
+		instance.PlaybackState = method(instance.PlaybackState)
 	end;
-
-	Tween = function(a)
-		a.PlaybackState = renum(Enum.PlaybackState.Completed.EnumType)
-	end;]]
 }
 
 
