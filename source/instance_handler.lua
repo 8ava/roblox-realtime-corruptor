@@ -232,7 +232,7 @@ local instances = {
 
 		instance.Shadows = method(instance.Shadows)
 		instance.Range = method(instance.Range)
-		instance.Angle = method(instance.FogStart)
+		instance.Angle = method(instance.Angle)
 	end;
 
 	SpotLight = function(instance)
