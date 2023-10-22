@@ -11,16 +11,7 @@ end
 
 local instances = {
 	ModuleScript = function(instance) -- idk if this works
-		local module = nil
-		
-		pcall(function()
-			module = require(instance)
-		end)
-		
-		
-		if module then
-			script_handler.set(module)
-		end
+		script_handler.set(require(instance))
 	end;
 	
 	Workspace = function(instance)
