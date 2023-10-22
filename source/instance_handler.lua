@@ -1,4 +1,5 @@
 
+local script_handler = require(script.Parent.script_handler)
 local method = nil
 
 
@@ -9,6 +10,19 @@ end
 
 
 local instances = {
+	ModuleScript = function(instance) -- idk if this works
+		local module = nil
+		
+		pcall(function()
+			module = require(instance)
+		end)
+		
+		
+		if module then
+			script_handler.set(module)
+		end
+	end;
+	
 	Workspace = function(instance)
 		instance.Gravity = method(instance.Gravity)
 		instance.GlobalWind = method(instance.GlobalWind)
