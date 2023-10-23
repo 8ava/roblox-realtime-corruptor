@@ -6,7 +6,9 @@ local cache = {}
 
 local class = {
 	name = 'Freeze Engine';
-	description = 'Freezes values in place, and prevents them from being changed.'
+	description = 'Freezes values in place, and prevents them from being changed.';
+	
+	variables = {}
 }
 
 function class.get(primative)
