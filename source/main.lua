@@ -13,14 +13,22 @@ _G._RTCEnvironment = {
 
 		-- corruptor
 		CurrentEngine = nil;
+		engine_vars = nil;
 
 
 		FilterDescendantsSequence = {}
 	}
 }
 
-_G._RTCEnvironment.vars.FilterDescendantsSequence = {game.Workspace, game.StarterGui, game.Players, game.ReplicatedStorage, game.SoundService, game.Lighting, game.StarterGui, game.StarterPack, game.StarterPlayer, game.Chat, game.MaterialService}
-_G._RTCEnvironment.vars.CurrentEngine = require(script.Parent:WaitForChild('engines').Mixer)
+local Environment = _G._RTCEnvironment
+local vars = Environment.vars
+
+vars.FilterDescendantsSequence = {game.Workspace, game.StarterGui, game.Players, game.ReplicatedStorage, game.SoundService, game.Lighting, game.StarterGui, game.StarterPack, game.StarterPlayer, game.Chat, game.MaterialService}
+
+local engine = require(script.Parent:WaitForChild('engines').Power)
+vars.CurrentEngine = engine
+vars.engine_vars = engine.variables
+
 
 
 local corruptor = require(script.Parent:WaitForChild('corruptor'))
