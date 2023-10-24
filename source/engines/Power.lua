@@ -12,7 +12,7 @@ local class = {
 	
 	
 	variables = { -- this will contain both the initialized values and their default values
-		Intensity = 2;
+		Intensity = 1.4;
 	}
 }
 
