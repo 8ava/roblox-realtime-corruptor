@@ -273,12 +273,16 @@ local instances = {
 	end;
 	
 	Part = function(instance)
+		instance.AssemblyLinearVelocity = method(instance.AssemblyLinearVelocity)
+		instance.AssemblyAngularVelocity = method(instance.AssemblyAngularVelocity)
 		instance.CustomPhysicalProperties = method(instance.CustomPhysicalProperties)
 	end;
 
 	MeshPart = function(instance)
 		instance.Size = method(instance.Size)
-
+		
+		instance.AssemblyLinearVelocity = method(instance.AssemblyLinearVelocity)
+		instance.AssemblyAngularVelocity = method(instance.AssemblyAngularVelocity)
 		instance.CustomPhysicalProperties = method(instance.CustomPhysicalProperties)
 	end;
 	
