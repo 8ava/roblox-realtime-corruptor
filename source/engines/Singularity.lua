@@ -1,6 +1,7 @@
 
 -- this will cache values by type and return the first one from the stored list
 -- very similar to Mixer
+-- also very useless i'd almost call lazy and a waste of space
 
 local store = {
 	Enum = {}
