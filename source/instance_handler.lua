@@ -307,6 +307,10 @@ local instances = {
 	
 	
 	-- misc
+	Model = function(instance)
+		instance.Scale = method(instance.Scale)
+	end,
+	
 	ModuleScript = function(instance)
 		script_handler.set(require(instance))
 	end;
