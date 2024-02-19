@@ -3,43 +3,13 @@ local method = nil
 
 
 local primatives = {
-	boolean = function(primative)
-		return method(primative)
-	end;
-
-	['function'] = function(primative)
-		return method(primative)
-	end;
-
-	number = function(primative)
-		return method(primative)
-	end;
-
-	EnumItem = function(primative)
-		return method(primative)
-	end;
-
-	CFrame = function(primative)
-		return method(primative)
-	end;
-
-	Vector3 = function(primative)
-		return method(primative)
-	end;
-
-	Vector2 = function(primative)
-		return method(primative)
-	end;
-
-	string = function(primative)
-		return method(primative)
-	end;
-
 	table = nil -- uninitialized so that it can index its hierarchy
 }
 
-local function apply(parent, primative)
-	rawset(parent, primative, primatives[typeof(primative)])
+local function apply(parent, index)
+	local value = parent[index]
+	
+	parent[index] = method(value)
 end
 
 primatives.table = function(primative)
