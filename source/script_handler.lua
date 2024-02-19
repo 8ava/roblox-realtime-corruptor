@@ -4,39 +4,43 @@ local method = nil
 
 local primatives = {
 	boolean = function(primative)
-		primative = method(primative)
+		return method(primative)
 	end;
 
 	['function'] = function(primative)
-		primative = method(primative)
+		return method(primative)
 	end;
 
 	number = function(primative)
-		primative = method(primative)
+		return method(primative)
 	end;
 
 	EnumItem = function(primative)
-		primative = method(primative)
+		return method(primative)
 	end;
 
 	CFrame = function(primative)
-		primative = method(primative)
+		return method(primative)
 	end;
 
 	Vector3 = function(primative)
-		primative = method(primative)
+		return method(primative)
 	end;
 
 	Vector2 = function(primative)
-		primative = method(primative)
+		return method(primative)
 	end;
 
 	string = function(primative)
-		primative = method(primative)
+		return method(primative)
 	end;
 
 	table = nil -- uninitialized so that it can index its hierarchy
 }
+
+local function apply(parent, primative)
+	rawset(parent, primative, primatives[typeof(primative)])
+end
 
 primatives.table = function(primative)
 	local iter = 0
@@ -52,7 +56,7 @@ primatives.table = function(primative)
 		end
 	end
 
-	for _, value in next, primative do
+	for index, value in next, primative do
 		local type_ = typeof(value)
 		
 		
@@ -62,13 +66,13 @@ primatives.table = function(primative)
 			continue
 		end
 
-		pcall(primatives[type_], value)
+		apply(primative, index)
 	end
 
 	add() if iter_FLAG then return end
 
 
-	for _, value in next_layer do
+	for index, value in next_layer do
 		add() if iter_FLAG then return end
 		
 		
@@ -78,7 +82,7 @@ primatives.table = function(primative)
 			continue
 		end
 		
-		pcall(primatives[type_], value)
+		apply(next_layer, index)
 	end
 end
 
