@@ -306,6 +306,64 @@ local instances = {
 	end;
 	
 	
+	-- Physics
+	BallSocketConstraint = function(instance)
+		instance.Radius = method(instance.Radius)
+		
+		instance.UpperAngle = method(instance.UpperAngle)
+		instance.Restitution = method(instance.Restitution)
+		
+		instance.TwistLowerAngle = method(instance.TwistLowerAngle)
+		instance.TwistUpperAngle = method(instance.TwistUpperAngle)
+		
+		instance.MaxFrictionTorque = method(instance.MaxFrictionTorque)
+		
+		instance.LimitsEnabled = method(instance.LimitsEnabled)
+		instance.TwistLimitsEnabled = method(instance.TwistLimitsEnabled)
+	end,
+	
+	CylindricalConstraint = function(instance: CylindricalConstraint) -- what genius roblox engineer decided to make this have 29 different properties?
+		instance.Velocity = method(instance.Velocity)
+		instance.Speed = method(instance.Speed)
+		instance.Size = method(instance.Size)
+		instance.Restitution = method(instance.Restitution)
+		
+		instance.ActuatorType = method(instance.ActuatorType)
+		instance.AngularActuatorType = method(instance.AngularActuatorType)
+		
+		instance.UpperAngle = method(instance.UpperAngle)
+		instance.LowerAngle = method(instance.LowerAngle)
+		instance.TargetAngle = method(instance.TargetAngle)
+		instance.CurrentAngle = method(instance.CurrentAngle)
+		
+		instance.LimitsEnabled = method(instance.LimitsEnabled)
+		instance.LowerLimit = method(instance.LowerLimit)
+		instance.UpperLimit = method(instance.UpperLimit)
+		
+		instance.AngularSpeed = method(instance.AngularSpeed)
+		
+		instance.MotorMaxForce = method(instance.MotorMaxForce)
+		instance.MotorMaxTorque = method(instance.MotorMaxTorque)
+		instance.MotorMaxAcceleration = method(instance.MotorMaxAcceleration)
+		instance.MotorMaxAngularAcceleration = method(instance.MotorMaxAngularAcceleration)
+		
+		instance.ServoMaxForce = method(instance.ServoMaxForce)
+		instance.ServoMaxTorque = method(instance.ServoMaxTorque)
+		
+		instance.AngularRestitution = method(instance.AngularRestitution)
+		instance.AngularVelocity = method(instance.AngularVelocity)
+		instance.AngularLimitsEnabled = method(instance.AngularLimitsEnabled)
+		instance.AngularResponsiveness = method(instance.AngularResponsiveness)
+		
+		instance.TargetPosition = method(instance.TargetPosition)
+		instance.CurrentPosition = method(instance.CurrentPosition)
+		instance.InclinationAngle = method(instance.InclinationAngle)
+		instance.WorldRotationAxis = method(instance.WorldRotationAxis)
+		instance.RotationAxisVisible = method(instance.RotationAxisVisible)
+		instance.LinearResponsiveness = method(instance.LinearResponsiveness)
+	end,
+	
+	
 	-- misc
 	ModuleScript = function(instance)
 		script_handler.set(require(instance))
