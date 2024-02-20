@@ -175,7 +175,7 @@ local instances = {
 		instance.Opacity = method(instance.Opacity)
 	end;
 
-	Fire = function(instance:Fire)
+	Fire = function(instance)
 		instance.TimeScale = method(instance.TimeScale)
 		instance.Size = method(instance.Size)
 		instance.Heat = method(instance.Heat)
@@ -307,6 +307,44 @@ local instances = {
 	
 	
 	-- Physics
+	AlignOrientation = function(instance)
+		instance.Mode = method(instance.Mode)
+		instance.AlignType = method(instance.AlignType)
+		instance.Responsiveness = method(instance.Responsiveness)
+		
+		instance.PrimaryAxis = method(instance.PrimaryAxis)
+		instance.SecondaryAxis = method(instance.SecondaryAxis)
+		instance.PrimaryAxisOnly = method(instance.PrimaryAxisOnly)
+		
+		instance.MaxTorque = method(instance.MaxTorque)
+		instance.LookAtPosition = method(instance.LookAtPosition)
+		instance.RigidityEnabled = method(instance.RigidityEnabled)
+		instance.MaxAngularVelocity = method(instance.MaxAngularVelocity)
+		instance.ReactionTorqueEnabled = method(instance.ReactionTorqueEnabled)
+	end,
+	
+	AlignPosition = function(instance)
+		instance.Mode = method(instance.Mode)
+		instance.Responsiveness = method(instance.Responsiveness)
+		
+		instance.MaxForce = method(instance.MaxForce)
+		instance.MaxVelocity = method(instance.MaxVelocity)
+		instance.MaxAxesForce = method(instance.MaxAxesForce)
+		
+		instance.ForceLimitMode = method(instance.ForceLimitMode)
+		instance.ForceRelativeTo = method(instance.ForceRelativeTo)
+		
+		instance.ApplyAtCenterOfMass = method(instance.ApplyAtCenterOfMass)
+		instance.ReactionForceEnabled = method(instance.ReactionForceEnabled)
+		instance.RigidityEnabled = method(instance.RigidityEnabled)
+	end,
+	
+	AngularVelocity = function(instance)
+		instance.MaxTorque = method(instance.MaxTorque)
+		instance.ReactionTorqueEnabled = method(instance.ReactionTorqueEnabled)
+		instance.RelativeTo = method(instance.RelativeTo)
+	end,
+	
 	BallSocketConstraint = function(instance)
 		instance.Radius = method(instance.Radius)
 		
@@ -322,7 +360,7 @@ local instances = {
 		instance.TwistLimitsEnabled = method(instance.TwistLimitsEnabled)
 	end,
 	
-	CylindricalConstraint = function(instance: CylindricalConstraint) -- what genius roblox engineer decided to make this have 29 different properties?
+	CylindricalConstraint = function(instance) -- what genius roblox engineer decided to make this have 29 different properties?
 		instance.Velocity = method(instance.Velocity)
 		instance.Speed = method(instance.Speed)
 		instance.Size = method(instance.Size)
@@ -362,6 +400,38 @@ local instances = {
 		instance.RotationAxisVisible = method(instance.RotationAxisVisible)
 		instance.LinearResponsiveness = method(instance.LinearResponsiveness)
 	end,
+	
+	HingeConstraint = function(instance)
+		instance.UpperAngle = method(instance.UpperAngle)
+		instance.LowerAngle = method(instance.LowerAngle)
+		instance.TargetAngle = method(instance.TargetAngle)
+		
+		instance.Restitution = method(instance.Restitution)
+		instance.Radius = method(instance.Radius)
+		instance.LimitsEnabled = method(instance.LimitsEnabled)
+		
+		instance.AngularSpeed = method(instance.AngularSpeed)
+		instance.AngularVelocity = method(instance.AngularVelocity)
+		instance.AngularResponsiveness = method(instance.AngularResponsiveness)
+		
+		instance.MotorMaxTorque = method(instance.MotorMaxTorque)
+		instance.ServoMaxTorque = method(instance.ServoMaxTorque)
+		instance.MotorMaxAcceleration = method(instance.MotorMaxAcceleration)
+
+		instance.ActuatorType = method(instance.ActuatorType)
+	end,
+	
+	--linearvelocity later
+	
+	NoCollisionConstraint = function(instance)
+		instance.Enabled = method(instance.Enabled)
+	end,
+	
+	PlaneConstraint = function(instance)
+		instance.Enabled = method(instance.Enabled)
+	end,
+	
+	
 	
 	
 	-- misc
