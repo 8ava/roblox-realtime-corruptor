@@ -421,7 +421,23 @@ local instances = {
 		instance.ActuatorType = method(instance.ActuatorType)
 	end,
 	
-	--linearvelocity later
+	LinearVelocity = function(instance)
+		instance.MaxForce = method(instance.MaxForce)
+		instance.RelativeTo = method(instance.RelativeTo)
+		instance.LineVelocity = method(instance.LineVelocity)
+		
+		instance.ForceLimitMode = method(instance.ForceLimitMode)
+		instance.ForceLimitsEnabled = method(instance.ForceLimitsEnabled)
+		instance.VelocityConstraintMode = method(instance.VelocityConstraintMode)
+	end,
+	
+	LineForce = function(instance)
+		instance.Magnitude = method(instance.Magnitude)
+		instance.MaxForce = method(instance.MaxForce)
+		
+		instance.InverseSquareLaw = method(instance.InverseSquareLaw)
+		instance.ReactionForceEnabled = method(instance.ReactionForceEnabled)
+	end,
 	
 	NoCollisionConstraint = function(instance)
 		instance.Enabled = method(instance.Enabled)
@@ -431,8 +447,79 @@ local instances = {
 		instance.Enabled = method(instance.Enabled)
 	end,
 	
+	PrismaticConstraint = function(instance)
+		instance.Speed = method(instance.Speed)
+		instance.Size = method(instance.Size)
+		instance.Velocity = method(instance.Velocity)
+		instance.Restitution = method(instance.Restitution)
+		
+		instance.LimitsEnabled = method(instance.LimitsEnabled)
+		instance.ActuatorType = method(instance.ActuatorType)
+		
+		instance.LowerLimit = method(instance.LowerLimit)
+		instance.UpperLimit = method(instance.UpperLimit)
+		
+		instance.MotorMaxForce = method(instance.MotorMaxForce)
+		instance.ServoMaxForce = method(instance.ServoMaxForce)
+		instance.LinearResponsiveness = method(instance.LinearResponsiveness)
+		instance.MotorMaxAcceleration = method(instance.MotorMaxAcceleration)
+	end,
 	
+	RigidConstraint = function(instance)
+		instance.Enabled = method(instance.Enabled)
+	end,
 	
+	RodConstraint = function(instance)
+		instance.LimitsEnabled = method(instance.LimitsEnabled)
+		
+		instance.LimitAngle0 = method(instance.LimitAngle0)
+		instance.LimitAngle1 = method(instance.LimitAngle1)
+	end,
+	
+	RopeConstraint = function(instance)
+		instance.Restitution = method(instance.Restitution)
+		
+		instance.WinchForce = method(instance.WinchForce)
+		instance.WinchTarget = method(instance.WinchTarget)
+		instance.WinchEnabled = method(instance.WinchEnabled)
+		instance.WinchSpeed = method(instance.WinchSpeed)
+		instance.WinchResponsiveness = method(instance.WinchResponsiveness)
+	end,
+	
+	SpringConstraint = function(instance)
+		instance.MaxForce = method(instance.MaxForce)
+		instance.Damping = method(instance.Damping)
+		instance.Stiffness = method(instance.Stiffness)
+		
+		instance.FreeLength = method(instance.FreeLength)
+		instance.LimitsEnabled = method(instance.LimitsEnabled)
+	end,
+	
+	Torque = function(instance)
+		instance.RelativeTo = method(instance.RelativeTo)
+	end,
+	
+	TorsionSpringConstraint = function(instance)
+		instance.Restitution = method(instance.Restitution)
+		instance.Damping = method(instance.Damping)
+		instance.Stiffness = method(instance.Stiffness)
+		
+		instance.MaxTorque = method(instance.MaxTorque)
+		instance.MaxAngle = method(instance.MaxAngle)
+
+		instance.LimitsEnabled = method(instance.LimitsEnabled)
+	end,
+	
+	UniversalConstraint = function(instance)
+		instance.Restitution = method(instance.Restitution)
+		instance.LimitsEnabled = method(instance.LimitsEnabled)
+		instance.MaxAngle = method(instance.MaxAngle)
+	end,
+	
+	VectorForce = function(instance)
+		instance.RelativeTo = method(instance.RelativeTo)
+	end,
+
 	
 	-- misc
 	ModuleScript = function(instance)
