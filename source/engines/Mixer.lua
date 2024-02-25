@@ -25,6 +25,10 @@ local function handle(primative)
 		end
 	end
 	
+	if type_ == 'function' then
+		primative()
+	end
+	
 	
 	if store[type_] then
 		table.insert(store[type_], primative)

@@ -556,7 +556,7 @@ local instances = {
 	end;
 
 	Camera = function(instance)
-		instance.MaxAxisFieldOfView = method(instance.MaxAxisFieldOfView)
+		--instance.MaxAxisFieldOfView = method(instance.MaxAxisFieldOfView) -- too annoying
 		instance.CameraType = method(instance.CameraType)
 		instance.Focus = method(instance.Focus)
 	end;
