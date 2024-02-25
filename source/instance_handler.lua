@@ -10,6 +10,35 @@ end
 
 
 local instances = {
+	-- Services
+	Terrain = function(instance)
+		instance.WaterColor = method(instance.WaterColor)
+		instance.WaterReflectance = method(instance.WaterReflectance)
+		instance.WaterTransparency = method(instance.WaterTransparency)
+		instance.WaterWaveSize = method(instance.WaterWaveSize)
+		instance.WaterWaveSpeed = method(instance.WaterWaveSpeed)
+	end,
+	
+	['Workspace'] = function(instance)
+		instance.Gravity = method(instance.Gravity)
+		instance.GlobalWind = method(instance.GlobalWind)
+		instance.Retargeting = method(instance.Retargeting)
+		
+		instance.ModelStreamingMode = method(instance.ModelStreamingMode)
+		instance.ClientAnimatorThrottling = method(instance.ClientAnimatorThrottling)
+	end,
+	
+	Players = function(instance)
+		instance.UseStrafingAnimations = method(instance.UseStrafingAnimations)
+	end,
+	
+	SoundService = function(instance)
+		instance.DistanceFactor = method(instance.DistanceFactor)
+		
+		instance.DopplerScale = method(instance.DopplerScale)
+		instance.RolloffScale = method(instance.RolloffScale)
+	end,
+	
 
 	-- Values
 	BoolValue = instance_value;
@@ -526,11 +555,6 @@ local instances = {
 		script_handler.set(require(instance))
 	end;
 
-	Workspace = function(instance)
-		instance.Gravity = method(instance.Gravity)
-		instance.GlobalWind = method(instance.GlobalWind)
-	end;
-
 	Camera = function(instance)
 		instance.MaxAxisFieldOfView = method(instance.MaxAxisFieldOfView)
 		instance.CameraType = method(instance.CameraType)
@@ -551,6 +575,12 @@ local instances = {
 			animation:AdjustSpeed(method(animation.Speed))
 		end
 	end;
+	
+	Tool = function(instance)
+		instance.ToolTip = method(instance.ToolTip)
+		instance.ModelStreamingMode = method(instance.ModelStreamingMode)
+		instance.ManualActivationOnly = method(instance.ManualActivationOnly)
+	end,
 
 	Tween = function(instance)
 		instance.PlaybackState = method(instance.PlaybackState)
