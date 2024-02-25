@@ -17,7 +17,7 @@ local class = {
 }
 
 local function rng()
-	return _G._RTCEnvironment.vars.engine_vars.Intensity * _G._RTCEnvironment._RANDOM:NextNumber(0, 2)
+	return _G._rtc_environment.vars.engine_vars.Intensity * _G._rtc_environment._RANDOM:NextNumber(0, 2)
 end
 
 local function mul(a)
@@ -26,7 +26,7 @@ end
 
 local primativeHandler = {
 	['function'] = function(a)
-		if _G._RTCEnvironment._RANDOM:NextInteger(0, 1) == 1 then -- idk something more creative than this also im lazy
+		if _G._rtc_environment._RANDOM:NextInteger(0, 1) == 1 then -- idk something more creative than this also im lazy
 			a()
 		end
 	end,
@@ -34,7 +34,7 @@ local primativeHandler = {
 	number = mul,
 	
 	boolean = function()
-		return _G._RTCEnvironment._RANDOM:NextInteger(0, 1) == 1
+		return _G._rtc_environment._RANDOM:NextInteger(0, 1) == 1
 	end,
 	
 	CFrame = function(a)

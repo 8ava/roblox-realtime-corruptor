@@ -14,7 +14,7 @@ local function handle(primative)
 		if store.Enum[primative.EnumType] then
 			table.insert(store.Enum[primative.EnumType], primative)
 
-			return store.Enum[primative.EnumType][_G._RTCEnvironment._RANDOM:NextInteger(1, #store.Enum[primative.EnumType])]
+			return store.Enum[primative.EnumType][_G._rtc_environment._RANDOM:NextInteger(1, #store.Enum[primative.EnumType])]
 		else
 			store.Enum[primative.EnumType] = {}
 			
@@ -33,7 +33,7 @@ local function handle(primative)
 	if store[type_] then
 		table.insert(store[type_], primative)
 		
-		return store[type_][_G._RTCEnvironment._RANDOM:NextInteger(1, #store[type_])]
+		return store[type_][_G._rtc_environment._RANDOM:NextInteger(1, #store[type_])]
 	else
 		store[type_] = {}
 		

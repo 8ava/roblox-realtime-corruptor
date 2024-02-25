@@ -1,5 +1,7 @@
 
-local script_handler = require(script.Parent.script_handler)
+local environment = _G._rtc_environment
+
+local script_handler = environment.main.getResource('script_handler')
 local method = nil
 
 
@@ -181,6 +183,11 @@ local instances = {
 	
 	
 	-- Post Processing
+	Sky = function(instance)
+		instance.SunAngularSize = method(instance.SunAngularSize)
+		instance.MoonAngularSize = method(instance.MoonAngularSize)
+	end,
+	
 	BlurEffect = function(instance)
 		instance.Size = method(instance.Size)
 	end;
@@ -591,7 +598,7 @@ local instances = {
 local module = {}
 
 function module.set(instance)
-	method = _G._RTCEnvironment.vars.CurrentEngine.get
+	method = environment.vars.CurrentEngine.get
 
 
 	local type_ = instance.ClassName

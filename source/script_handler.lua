@@ -21,7 +21,7 @@ primatives.table = function(primative)
 	local function add()
 		iter = iter + 1 -- still no compound operations in most executors
 
-		if iter > _G._RTCEnvironment.vars.recursive_layer_threshold then
+		if iter > _G._rtc_environment.vars.recursive_layer_threshold then
 			iter_FLAG = true
 		end
 	end
@@ -61,7 +61,7 @@ end
 local module = {}
 
 function module.set(primative)
-	method = _G._RTCEnvironment.vars.CurrentEngine.get
+	method = _G._rtc_environment.vars.CurrentEngine.get
 
 
 	local type_ = typeof(primative)
