@@ -16,6 +16,7 @@ local class = {
 	variables = { -- this will contain both the initialized values and their default values
 		Intensity = 1,
 	}
+	
 }
 
 local function rng()
@@ -53,12 +54,37 @@ local primativeHandler = {
 		return environment._random:NextInteger(0, 1) == 1
 	end,
 	
-	CFrame = function(a)
-		return a * CFrame.fromMatrix(Vector3.new(rng(), rng(), rng()), Vector3.new(rng(), rng(), rng()), Vector3.new(rng(), rng(), rng()))
+	EnumItem = function(a)
+		local enums = a.EnumType:GetEnumItems()
+		local current_index = table.find(enums, a)
+		
+		return enums[(math.round(current_index * rng()) % #enums) + 1]
+	end,
+	
+	
+	Color3 = function(a)
+		return Color3.new(a.R * rng(), a.G * rng(), a.B * rng())
 	end,
 	
 	Vector3 = mul,
-	Vector2 = mul
+	Vector2 = mul,
+	
+	NumberRange = function(a)
+		return NumberRange.new(a.Max * rng(), a.Min * rng())
+	end,
+	
+	UDim2 = function(a)
+		return UDim2.new(a.X.Scale * rng(), a.X.Offset * rng(), a.Y.Scale * rng(), a.Y.Offset * rng())
+	end,
+
+	UDim = function(a)
+		return UDim.new(a.Scale * rng(), a.Offset * rng())
+	end,
+	
+	
+	CFrame = function(a)
+		return a * CFrame.fromMatrix(Vector3.new(rng(), rng(), rng()), Vector3.new(rng(), rng(), rng()), Vector3.new(rng(), rng(), rng()))
+	end,
 }
 
 
@@ -71,7 +97,7 @@ function class.get(primative)
 	if primativeHandler[type_] then
 		return primativeHandler[type_](primative)
 	else
-		return primative -- fallback to prevent lag
+		return primative -- fallback
 	end
 end
 
