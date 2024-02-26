@@ -1,10 +1,18 @@
 
--- this will cache values by type and return the first one from the stored list
--- very similar to Mixer
--- also very useless i'd almost call lazy and a waste of space
 
-local store = {
-	Enum = {}
+local environment = nil
+local store = {['Enum'] = {}}
+
+
+local class = {
+	name = 'Singularity Engine';
+	description = 'Corrupts values by replacing them with the first indexed value.';
+
+	variables = {
+		redraw = function() -- functions appear as buttons
+			table.clear(store)
+		end,
+	}
 }
 
 
@@ -24,30 +32,27 @@ local function handle(primative)
 			return primative
 		end
 	end
-	
-	
+
+
 	if store[type_] then
 		return store[type_][1]
 	else
 		store[type_] = {}
-		
+
 		table.insert(store[type_], primative)
-		
-		
+
+
 		return primative
 	end
 end
 
 
-local class = {
-	name = 'Singularity Engine';
-	description = 'Corrupts values by setting it to the first of its kind.';
-	
-	variables = {}
-}
 
 function class.get(primative)
+	environment = _G._rtc_environment
+	
 	return handle(primative)
 end
+
 
 return class
