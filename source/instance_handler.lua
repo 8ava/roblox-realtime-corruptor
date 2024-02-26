@@ -1,7 +1,7 @@
 
-local environment = _G._rtc_environment
+local environment = nil
 
-local script_handler = environment.main.getResource('script_handler')
+local script_handler = nil
 local method = nil
 
 
@@ -595,20 +595,27 @@ local instances = {
 }
 
 
-local module = {}
+local class = {}
 
-function module.set(instance)
-	method = environment.vars.CurrentEngine.get
-
-
+function class.set(instance)
 	local type_ = instance.ClassName
 
 	if instances[type_] then
 		local a, message = pcall(instances[type_], instance) if not a then warn(message) end
 	else
-		-- later
+		--print(`{type_} ignored.`)
 	end
 end
 
 
-return module
+function class.init() -- gonna have to add inits to all my classes because of the way i set up my environment :)
+	environment = _G._rtc_environment
+	
+	script_handler = environment.main.getResource('script_handler')
+	script_handler.init()
+	
+	method = environment.corruptorVariables.current_engine.get
+end
+
+
+return class

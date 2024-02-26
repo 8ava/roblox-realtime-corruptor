@@ -1,9 +1,17 @@
 
--- this will cache values by type and return a random one from the stored list
 
-local store = {
-	Enum = {}
+local environment = nil
+
+
+local class = {
+	name = 'Mixer Engine';
+	description = 'Corrupts values by swapping them with similar values.';
+
+	variables = {}
 }
+
+
+local store = {['Enum'] = {}}
 
 
 local function handle(primative)
@@ -14,7 +22,7 @@ local function handle(primative)
 		if store.Enum[primative.EnumType] then
 			table.insert(store.Enum[primative.EnumType], primative)
 
-			return store.Enum[primative.EnumType][_G._rtc_environment._RANDOM:NextInteger(1, #store.Enum[primative.EnumType])]
+			return store.Enum[primative.EnumType][environment._random:NextInteger(1, #store.Enum[primative.EnumType])]
 		else
 			store.Enum[primative.EnumType] = {}
 			
@@ -33,7 +41,7 @@ local function handle(primative)
 	if store[type_] then
 		table.insert(store[type_], primative)
 		
-		return store[type_][_G._rtc_environment._RANDOM:NextInteger(1, #store[type_])]
+		return store[type_][environment._random:NextInteger(1, #store[type_])]
 	else
 		store[type_] = {}
 		
@@ -45,15 +53,12 @@ local function handle(primative)
 end
 
 
-local class = {
-	name = 'Mixer Engine';
-	description = 'Corrupts values by swapping them with similar values.';
-	
-	variables = {}
-}
 
 function class.get(primative)
+	environment = _G._rtc_environment
+	
 	return handle(primative)
 end
+
 
 return class

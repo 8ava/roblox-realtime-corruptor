@@ -1,4 +1,5 @@
 
+local environment = nil
 local method = nil
 
 
@@ -21,7 +22,7 @@ primatives.table = function(primative)
 	local function add()
 		iter = iter + 1 -- still no compound operations in most executors
 
-		if iter > _G._rtc_environment.vars.recursive_layer_threshold then
+		if iter > environment.corruptorVariables.script_recursive_layer_threshold then
 			iter_FLAG = true
 		end
 	end
@@ -58,20 +59,23 @@ end
 
 
 
-local module = {}
+local class = {}
 
-function module.set(primative)
-	method = _G._rtc_environment.vars.CurrentEngine.get
-
-
+function class.set(primative)
 	local type_ = typeof(primative)
 
 	if primatives[type_] then
 		local a, message = pcall(primatives[type_], primative) if not a then warn(message) end
 	else
-		-- later
+		--print(`{type_} ignored.`)
 	end
 end
 
 
-return module
+function class.init()
+	environment = _G._rtc_environment
+	method = environment.corruptorVariables.current_engine.get
+end
+
+
+return class

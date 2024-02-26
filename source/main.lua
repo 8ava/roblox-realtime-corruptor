@@ -69,7 +69,7 @@ end
 
 
 
-class.setEngine('Power')
+class.setEngine('Mixer')
 environment.corruptorVariables.filter_desendants_sequence = {game.Workspace, game.StarterGui, game.Players, game.ReplicatedStorage, game.SoundService, game.Lighting, game.StarterGui, game.StarterPack, game.StarterPlayer, game.Chat, game.MaterialService}
 
 -- init global

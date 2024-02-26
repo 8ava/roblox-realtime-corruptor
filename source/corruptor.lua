@@ -23,9 +23,10 @@ end
 
 function class.init() -- ugh
 	environment = _G._rtc_environment
-	instance_handler = environment.main.getResource('instance_handler')
-	
 	environment._random = Random.new(environment.corruptorVariables.random_seed) -- behavior should not be done in main
+	
+	instance_handler = environment.main.getResource('instance_handler')
+	instance_handler.init()
 end
 
 

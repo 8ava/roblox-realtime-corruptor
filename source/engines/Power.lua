@@ -1,7 +1,9 @@
 
--- glorified multiplying
+
+local environment = nil
 
 local cache = {}
+
 
 
 local class = {
@@ -17,16 +19,18 @@ local class = {
 }
 
 local function rng()
-	return _G._rtc_environment.vars.engine_vars.Intensity * _G._rtc_environment._RANDOM:NextNumber(0, 2)
+	return class.variables.Intensity * environment._random:NextNumber(0, 2)
 end
 
 local function mul(a)
 	return a * rng()
 end
 
+
+
 local primativeHandler = {
 	['function'] = function(a)
-		if _G._rtc_environment._RANDOM:NextInteger(0, 1) == 1 then -- idk something more creative than this also im lazy
+		if environment._random:NextInteger(0, 1) == 1 then -- idk something more creative than this also im lazy
 			a()
 		end
 	end,
@@ -34,7 +38,7 @@ local primativeHandler = {
 	number = mul,
 	
 	boolean = function()
-		return _G._rtc_environment._RANDOM:NextInteger(0, 1) == 1
+		return environment._random:NextInteger(0, 1) == 1
 	end,
 	
 	CFrame = function(a)
@@ -45,7 +49,11 @@ local primativeHandler = {
 	Vector2 = mul
 }
 
+
 function class.get(primative)
+	environment = _G._rtc_environment
+	
+	
 	local type_ = typeof(primative)
 	
 	if primativeHandler[type_] then
