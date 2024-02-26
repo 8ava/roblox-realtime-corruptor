@@ -14,12 +14,12 @@ local class = {
 	
 	
 	variables = { -- this will contain both the initialized values and their default values
-		Intensity = 2,
+		Intensity = 1,
 	}
 }
 
 local function rng()
-	return class.variables.Intensity * environment._random:NextNumber(0, 2)
+	return environment._random:NextNumber(-2, 2) * class.variables.Intensity
 end
 
 local function mul(a)
@@ -36,6 +36,18 @@ local primativeHandler = {
 	end,
 	
 	number = mul,
+	
+	string = function(z)
+		local str = ''
+		
+		for i = 1, #z do
+			local a = z:sub(i, i):byte()
+			
+			str = `{str}{string.char(a + math.floor(rng()))}`
+		end
+		
+		return str
+	end,
 	
 	boolean = function()
 		return environment._random:NextInteger(0, 1) == 1
